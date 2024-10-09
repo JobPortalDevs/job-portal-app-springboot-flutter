@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobportal_app/features/user_profile/models/user_profile_model.dart';
-import '../services/user_profile_service.dart';
+import 'package:jobportal_app/features/user_profile/services/user_profile_service.dart';
 
 class UserProfileForm extends StatefulWidget {
   final UserProfile? userProfile; // Null for adding new, non-null for editing
@@ -49,7 +49,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
         id: widget.userProfile?.id, // Keep ID if editing
         name: nameController.text,
         email: emailController.text,
-        resume: resumeController.text,
+        resume: role == "USER" ? resumeController.text : null,
         role: role,
       );
 
@@ -58,8 +58,11 @@ class _UserProfileFormState extends State<UserProfileForm> {
           await _userProfileService
               .createUserProfile(profile); // Create new profile
         } else {
-          //await _userProfileService.updateUserProfile(profile);  // Edit existing profile
-          print("P L A C E  H O L D E R  P R I N T !");
+          print("Update expected");
+          print("Resume url: ${resumeController.text}");
+          await _userProfileService
+              .updateUserProfile(profile); // Edit existing profile
+          // print("P L A C E  H O L D E R  P R I N T !");
         }
         Navigator.pop(
             context, true); // Return to previous screen with success status
@@ -82,7 +85,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: [
               TextFormField(
                 controller: nameController,
@@ -96,14 +99,14 @@ class _UserProfileFormState extends State<UserProfileForm> {
                 validator: (value) =>
                     value!.isEmpty ? "Please enter an email" : null,
               ),
-              TextFormField(
-                controller: resumeController,
-                decoration: InputDecoration(labelText: "Resume (Optional)"),
-              ),
+              // TextFormField(
+              //   controller: resumeController,
+              //   decoration: InputDecoration(labelText: "Resume (Optional)"),
+              // ),
               DropdownButtonFormField(
                 value: role,
                 items: ["USER", "EMPLOYER"].map((String value) {
-                  return DropdownMenuItem(
+                  return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
                   );
@@ -111,6 +114,14 @@ class _UserProfileFormState extends State<UserProfileForm> {
                 onChanged: (value) => setState(() => role = value!),
                 decoration: InputDecoration(labelText: "Role"),
               ),
+              if (role == "USER")
+                TextFormField(
+                  controller: resumeController,
+                  decoration: InputDecoration(labelText: "Resume URL"),
+                  validator: (value) => role == "USER" && value!.isEmpty
+                      ? "Please enter a resume URL"
+                      : null,
+                ),
               SizedBox(height: 20),
               ElevatedButton(
                 child: Text(widget.userProfile == null ? "Create" : "Update"),
