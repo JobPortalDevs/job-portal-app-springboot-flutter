@@ -50,7 +50,8 @@ class UserProfileService {
       Uri.parse('$userProfileBaseUrl/${profile.id}'),
       headers: {"Content-Type": "application/json"},
     );
-    print('Deleting user profile at: $userProfileBaseUrl/${profile.id}');
+    //print('Deleting user profile at: $userProfileBaseUrl/${profile.id}');
+    print("MBAKS PRINT STATEMENT");
     if (response.statusCode == 204) {
       return ApiResponse(
         success: true,
