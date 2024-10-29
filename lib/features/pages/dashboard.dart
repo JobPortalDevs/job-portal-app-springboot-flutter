@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobportal_app/features/models/jobModel.dart';
 import 'package:jobportal_app/features/pages/AddJob.dart';
+import 'package:jobportal_app/features/pages/user_profile_screen.dart';
 import 'package:jobportal_app/features/pages/view_profile.dart';
 import 'package:jobportal_app/features/reusableComponoents/jobCard.dart';
-import 'package:jobportal_app/features/reusableComponoents/jobtile.dart';
 // import 'package:jobportal_app/configs/utils/api_mock_services.dart';
 
 
@@ -27,14 +27,10 @@ class HomePage extends ConsumerWidget {
         centerTitle: true,
         title: const Text('Jobs'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // Handle filter
-            },
-          ),
+         
            Container(
             // padding: const EdgeInsets.all(5),
+            margin: EdgeInsets.only(right: 10),
             height: 40,
             width: 40,
             decoration: BoxDecoration(
@@ -42,10 +38,26 @@ class HomePage extends ConsumerWidget {
               borderRadius: BorderRadius.circular(25)
             ),
             child:  IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.filter_list, color: Colors.white,),
+            onPressed: () {
+              // Handle filter
+            },
+          ),
+          ),
+           Container(
+            // padding: const EdgeInsets.all(5),
+            margin: EdgeInsets.only(right: 10),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(25)
+            ),
+            child:  IconButton(
+            icon: const Icon(Icons.add, color: Colors.white,),
             onPressed: () {
               // Add a new job (admin only feature)
-              //logic to verify whether particular person is admin
+              // fy whether particular person is admin
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Addjob()),
@@ -53,24 +65,27 @@ class HomePage extends ConsumerWidget {
             },
           ),
           ),
-         
-          Container(
+           Container(
             // padding: const EdgeInsets.all(5),
+            margin: EdgeInsets.only(right: 10),
             height: 40,
             width: 40,
             decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.circular(25)
             ),
-            child: IconButton(
+            child:  IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ViewProfile()),
+                    // MaterialPageRoute(builder: (context) => const ViewProfile()),
+                    MaterialPageRoute(builder: (context) => const UserProfileScreen()),
                   );
                 },
-                icon: const Icon(Icons.person, color: Colors.black,)),
-          )
+                icon: const Icon(Icons.person, color: Colors.white,)
+                ),
+          ),
+         
         ],
       ),
       body: SingleChildScrollView(
@@ -84,7 +99,7 @@ class HomePage extends ConsumerWidget {
                   const Text("Recent Uploads", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
                   Container(
                     height: 400,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: GridView.builder(         // allow overflow
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1, 
@@ -92,7 +107,7 @@ class HomePage extends ConsumerWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,        //change to recent uploads
                      itemBuilder: (BuildContext context, int index) {
-                        return  JobCard(
+                        return  const JobCard(
                           // job: jobs[index], onPressed: () {  },
                           );        // pass in job as param
                        },
@@ -100,7 +115,7 @@ class HomePage extends ConsumerWidget {
                   )
                 ],
               ),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -115,10 +130,10 @@ class HomePage extends ConsumerWidget {
                             mainAxisSpacing: 30),
                             scrollDirection: Axis.vertical,
                   
-                      itemCount: 10,
+                      itemCount: 40,
                       itemBuilder: (context, index) {
                       
-                      return  JobCard(
+                      return  const JobCard(
                         // job: filteredJobs[index], onPressed: () {  },
                         );
                       

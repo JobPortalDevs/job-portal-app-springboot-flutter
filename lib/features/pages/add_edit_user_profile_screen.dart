@@ -82,7 +82,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
               ? "Add User Profile"
               : "Edit User Profile")),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: ListView(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jobportal_app/features/auth/login.dart';
 import 'package:jobportal_app/features/pages/dashboard.dart';
 
 void main() {
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       // home: UserProfileScreen(), // Start with the UserProfileScreen
       // home: const LoginPage(), // Start with the UserProfileScreen
       // home: const SignUpPage(), // Start with the UserProfileScreen
-      home:  HomePage(), // Start with the UserProfileScreen
+      home:  const HomePage(), // Start with the UserProfileScreen
     );
   }
 }

@@ -26,6 +26,7 @@ class Addjob extends ConsumerWidget {
         title: const Text("Post new Job"),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
         child: Form(
             child: Column(
           children: [
@@ -46,7 +47,7 @@ class Addjob extends ConsumerWidget {
               onChanged: (value) =>
                   ref.read(titleProvider.notifier).state = value,
               decoration: const InputDecoration(
-                  icon: Icon(Icons.work),
+                  icon: Icon(Icons.person),
                   hintText: "job title",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
@@ -58,7 +59,7 @@ class Addjob extends ConsumerWidget {
               onChanged: (value) =>
                   ref.read(descriptionProvider.notifier).state = value,
               decoration: const InputDecoration(
-                  icon: Icon(Icons.work),
+                  icon: Icon(Icons.note_alt),
                   hintText: "job description",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
@@ -70,7 +71,7 @@ class Addjob extends ConsumerWidget {
               onChanged: (value) =>
                   ref.read(locationProvider.notifier).state = value,
               decoration: const InputDecoration(
-                  icon: Icon(Icons.work),
+                  icon: Icon(Icons.location_city),
                   hintText: "location",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
@@ -82,7 +83,7 @@ class Addjob extends ConsumerWidget {
               onChanged: (value) =>
                   ref.read(locationProvider.notifier).state = value,
               decoration: const InputDecoration(
-                  icon: Icon(Icons.work),
+                  icon: Icon(Icons.date_range_outlined),
                   hintText: "deadline date", //change to datetime picker
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
@@ -95,7 +96,7 @@ class Addjob extends ConsumerWidget {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                     elevation: 12,
-                    padding: const EdgeInsets.all(5)),
+                    padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20)),
                 onPressed: () => _PostJob(ref, context),
                 child: const Text("Post"),
               ),

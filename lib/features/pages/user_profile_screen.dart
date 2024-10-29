@@ -57,7 +57,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("My Profile"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -66,25 +66,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
-                color: Colors.grey,
+                // color: Colors.grey,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
+                    radius: 80,
                     child: Image.asset("assetname"), //update asset name
                   ),
-                  const Text("Username123"),
-                  const Text("emailadress.exmaple.com")
+                  const SizedBox(height: 10,),
+                  const Text("Username123", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),),
+                  const SizedBox(height: 10,),
+                  const Text("emailaddress.example.com",style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black))
                 ],
               ),
             ),
-            SizedBox(
-              height: double.infinity,
+            Container(
+              // height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 60),
+              height: 800,
               child: ListView(
                 children: [
                   const ListTile(
+                    leading: Icon(Icons.location_city),
                     title: Text(
                       "address",
                       style:
@@ -93,10 +99,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     subtitle: Text(
                       "123 Magwegwe west",
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ),
+                  const SizedBox(height: 10,),
                   const ListTile(
+                    leading: Icon(Icons.man_4_outlined),
                     title: Text(
                       "Gender",
                       style:
@@ -105,10 +113,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     subtitle: Text(
                       "Male",
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ),
+                  const SizedBox(height: 10,),
                   const ListTile(
+                    leading: Icon(Icons.school),
                     title: Text(
                       "Qualification",
                       style:
@@ -117,21 +127,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     subtitle: Text(
                       "Masters in Accounting",
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ),
+                  const SizedBox(height: 10,),
                   const ListTile(
+                    leading: Icon(Icons.work_history),
                     title: Text(
-                      "work experience in years",
+                      "Work experience in years",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     subtitle: Text(
                       "5 years",
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ),
+                  const SizedBox(height: 10,),
+                  const ListTile(
+                    leading: Icon(Icons.work_history),
+                    title: Text(
+                      "Link to resume",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    subtitle: Text(
+                      "https://th.bing.com/th/id/R.85b660e4cfa28031b70cc70d2e7df008?rik=5sMAjG61%2frbz8g&pid=ImgRaw&r=0",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                
                   Container(
                     padding: const EdgeInsets.all(30),
                     color: Colors.white,

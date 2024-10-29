@@ -19,12 +19,7 @@ class _ViewProfileState extends ConsumerState<ViewProfile> {
             Container(),
             const ListTile(title: Text("full name"), subtitle: Text("name and surname"),),
             const SizedBox(height: 5,),
-            const ListTile(title: Text("full name"), subtitle: Text("name and surname"),),
-            const SizedBox(height: 5,),
-            const ListTile(title: Text("full name"), subtitle: Text("name and surname"),),
-            const SizedBox(height: 5,),
-            const ListTile(title: Text("full name"), subtitle: Text("name and surname"),),
-            const SizedBox(height: 5,),
+           
           ],
         ),
       ),
