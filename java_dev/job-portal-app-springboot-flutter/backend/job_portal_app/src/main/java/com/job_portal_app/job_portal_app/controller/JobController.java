@@ -1,7 +1,6 @@
 package com.job_portal_app.job_portal_app.controller;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

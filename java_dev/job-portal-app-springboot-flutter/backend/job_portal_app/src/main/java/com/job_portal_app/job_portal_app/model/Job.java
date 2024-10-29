@@ -22,7 +22,7 @@ public class Job {
     private LocalDateTime postedDate;
     private LocalDateTime applicationDeadline;
 
-    // @ManyToOne
-    // @JoinColumn(name = "employer_id")
-    // private UserProfile employer; // Relation with employer profile
+    @ManyToOne
+    @JoinColumn(name = "employer_id")
+    private UserProfile employer; // Relation with employer profile
 }
