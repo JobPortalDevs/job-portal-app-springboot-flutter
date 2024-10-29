@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobportal_app/features/models/jobModel.dart';
 import 'package:jobportal_app/features/pages/AddJob.dart';
 import 'package:jobportal_app/features/pages/view_profile.dart';
+import 'package:jobportal_app/features/reusableComponoents/jobCard.dart';
 import 'package:jobportal_app/features/reusableComponoents/jobtile.dart';
 // import 'package:jobportal_app/configs/utils/api_mock_services.dart';
 
@@ -32,7 +33,15 @@ class HomePage extends ConsumerWidget {
               // Handle filter
             },
           ),
-          IconButton(
+           Container(
+            // padding: const EdgeInsets.all(5),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(25)
+            ),
+            child:  IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               // Add a new job (admin only feature)
@@ -43,13 +52,15 @@ class HomePage extends ConsumerWidget {
               );
             },
           ),
+          ),
+         
           Container(
-            padding: const EdgeInsets.all(5),
-            height: 30,
-            width: 30,
+            // padding: const EdgeInsets.all(5),
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(
               color: Colors.grey,
-              borderRadius: BorderRadius.circular(15)
+              borderRadius: BorderRadius.circular(25)
             ),
             child: IconButton(
                 onPressed: () {
@@ -68,62 +79,82 @@ class HomePage extends ConsumerWidget {
           child: Column(
             children: [
               Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Recent Uploads"),
-                  SizedBox(
+                  const Text("Recent Uploads", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                  Container(
                     height: 400,
+                    padding: EdgeInsets.symmetric(vertical: 20),
                     child: GridView.builder(         // allow overflow
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1, 
                         mainAxisSpacing: 30),
                         scrollDirection: Axis.horizontal,
-                        itemCount: jobs.length,        //change to recent uploads
+                        itemCount: 10,        //change to recent uploads
                      itemBuilder: (BuildContext context, int index) {
-                        return  JobCard(job: jobs[index], onPressed: () {  },);        // pass in job as param
+                        return  JobCard(
+                          // job: jobs[index], onPressed: () {  },
+                          );        // pass in job as param
                        },
                     ),
                   )
                 ],
               ),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  itemCount: filteredJobs.length,
-                  itemBuilder: (context, index) {
+              SizedBox(height: 40,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   const Text("Recent Uploads", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                  SizedBox(
+                    height: 800,
+                    child:   
+                    GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, 
+                            crossAxisSpacing: 30,
+                            mainAxisSpacing: 30),
+                            scrollDirection: Axis.vertical,
                   
-                  return  JobCard(job: filteredJobs[index], onPressed: () {  },);
-                  
-                    // return Card(        
-                    //   elevation: 2,
-                    //   shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(12),
-                    //   ),
-                    //   margin: const EdgeInsets.symmetric(vertical: 8),
-                    //   child: ListTile(
-                    //     leading: const Icon(Icons.work_outline),
-                    //     title: Text(jobs[index].title),
-                    //     subtitle: Text('Location: ${jobs[index].location}'),
-                    //     trailing: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.end,
-                    //       children: [
-                    //         Text('${jobs[index].applicants} Applicants'),
-                    //         if (jobs[index].isNew)
-                    //           const Text('New', style: TextStyle(color: Colors.green)),
-                    //       ],
-                    //     ),
-                    //     onTap: () {
-                    //       // Route to view job
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => ViewJob(job: jobs[index])),
-                    //       );
-                    //     },
-                    //   ),
-                    // );
-                
-                  },
-                ),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                      
+                      return  JobCard(
+                        // job: filteredJobs[index], onPressed: () {  },
+                        );
+                      
+                        // return Card(        
+                        //   elevation: 2,
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(12),
+                        //   ),
+                        //   margin: const EdgeInsets.symmetric(vertical: 8),
+                        //   child: ListTile(
+                        //     leading: const Icon(Icons.work_outline),
+                        //     title: Text(jobs[index].title),
+                        //     subtitle: Text('Location: ${jobs[index].location}'),
+                        //     trailing: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.end,
+                        //       children: [
+                        //         Text('${jobs[index].applicants} Applicants'),
+                        //         if (jobs[index].isNew)
+                        //           const Text('New', style: TextStyle(color: Colors.green)),
+                        //       ],
+                        //     ),
+                        //     onTap: () {
+                        //       // Route to view job
+                        //       Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (context) => ViewJob(job: jobs[index])),
+                        //       );
+                        //     },
+                        //   ),
+                        // );
+                    
+                      }, 
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
