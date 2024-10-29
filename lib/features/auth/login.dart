@@ -1,30 +1,24 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http; // Using http
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:jobportal_app/features/auth/sign_up.dart';
 import 'package:jobportal_app/features/pages/dashboard.dart';
-import 'package:jobportal_app/providers/base_urlProvider.dart';
 
-// Providers for email and password
-final emailProvider = StateProvider<String>((ref) => '');
-final passwordProvider = StateProvider<String>((ref) => '');
-final errorProvider = StateProvider<String>((ref) => ''); 
-
-class LoginPage extends ConsumerStatefulWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState(); 
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
+  // Form field controllers
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String errorMessage = '';
+
   @override
   Widget build(BuildContext context) {
-    final email = ref.watch(emailProvider);
-    final password = ref.watch(passwordProvider);
-    final errorMessage = ref.watch(errorProvider);
-
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Padding(
@@ -34,16 +28,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Welcome Back',
+              'Login',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-            if (errorMessage.isNotEmpty) 
+            const SizedBox(height: 40),
+            // Error message display
+            if (errorMessage.isNotEmpty)
               Text(errorMessage, style: const TextStyle(color: Colors.red)),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            // Email TextField
             TextField(
-              onChanged: (value) => ref.read(emailProvider.notifier).state = value,
+              controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
                 prefixIcon: const Icon(Icons.email),
@@ -53,9 +49,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
             ),
             const SizedBox(height: 16),
+            // Password TextField
             TextField(
-              obscureText: true,
-              onChanged: (value) => ref.read(passwordProvider.notifier).state = value,
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: const Icon(Icons.lock),
@@ -63,12 +59,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              obscureText: true,
             ),
             const SizedBox(height: 20),
+            // Login Button
             ElevatedButton(
-              onPressed: () async {
-                await _signIn(email, password, ref, context);
-              },
+              onPressed: _login,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
@@ -84,45 +80,48 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   MaterialPageRoute(builder: (context) => const SignUpPage()),
                 );
               },
-              child: const Text('Don\'t have an account? Sign Up'),
+              child: const Text('Don’t have an account? Sign Up'),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-Future<void> _signIn(String email, String password, WidgetRef ref, BuildContext context) async {
-  final url = Uri.parse('$base_url/auth/login');
-  try {
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(
-        {'email': email, 'password': password},
-      ),
+  // Login logic using Hive to authenticate the user
+  void _login() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    // Open the Hive box
+    final userBox = Hive.box('authBox');
+
+    // Check if the user exists
+    if (!userBox.containsKey(email)) {
+      setState(() {
+        errorMessage = "User does not exist";
+      });
+      return;
+    }
+
+    // Check if the password matches
+    final storedPassword = userBox.get(email);
+    if (storedPassword != password) {
+      setState(() {
+        errorMessage = "Incorrect password";
+      });
+      return;
+    }
+
+    // Redirect to the dashboard after successful login
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
     );
 
-    if (response.statusCode == 200) {
-      // Navigate to home page on successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) =>  const HomePage()),
-      );
-    } else {
-      // Update error message in the provider
-      ref.read(errorProvider.notifier).state = 'Error: ${response.statusCode}';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${response.statusCode}')),
-      );
-    }
-  } on Exception catch (e) {
-    ref.read(errorProvider.notifier).state = 'An error occurred: $e';
+    // Show success message (optional SnackBar)
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('An error occurred: $e')),
+      const SnackBar(content: Text("Login Successful")),
     );
   }
 }
