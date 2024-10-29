@@ -1,6 +1,8 @@
 package com.job_portal_app.job_portal_app.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,20 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllJobs());
     }
 
-    @GetMapping("/employer/{employerId}")
-    public ResponseEntity<List<Job>> getJobsByEmployer(@PathVariable Long employerId) {
-        return ResponseEntity.ok(jobService.getJobsByEmployer(employerId));
+    // @GetMapping("/employer/{employerId}")
+    // public ResponseEntity<List<Job>> getJobsByEmployer(@PathVariable Long
+    // employerId) {
+    // return ResponseEntity.ok(jobService.getJobsByEmployer(employerId));
+    // }
+
+    @PutMapping("/{id}/update-job")
+    public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job job) {
+        return ResponseEntity.ok(jobService.updateJob(id, job));
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<HttpStatus> deleteJob(@PathVariable Long id) {
+        jobService.deleteJob(id);
+        return ResponseEntity.noContent().build();
     }
 }

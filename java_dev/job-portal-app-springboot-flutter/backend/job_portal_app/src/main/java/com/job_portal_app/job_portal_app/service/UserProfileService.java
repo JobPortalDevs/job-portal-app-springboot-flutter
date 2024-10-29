@@ -16,19 +16,16 @@ public class UserProfileService {
         userProfileRepository.deleteById(id);
     }
 
-    @SuppressWarnings("rawtypes")
     private final UserProfileRepository userProfileRepository;
 
-    @SuppressWarnings("unchecked")
     public UserProfile createUserProfile(UserProfile userProfile) {
         return (UserProfile) userProfileRepository.save(userProfile);
     }
 
-    public UserProfile updateUserProfile(UserProfile userProfile) {
+    public UserProfile updateUserProfile(Long id, UserProfile userProfile) {
         return (UserProfile) userProfileRepository.save(userProfile);
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserProfile> getAllProfiles() {
         return userProfileRepository.findAll();
     }

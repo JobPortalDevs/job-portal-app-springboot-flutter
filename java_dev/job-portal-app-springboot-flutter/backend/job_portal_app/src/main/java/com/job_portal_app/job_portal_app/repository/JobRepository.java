@@ -6,5 +6,5 @@ import com.job_portal_app.job_portal_app.model.Job;
 import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job, Long> {
-    List<Job> findByEmployer_Id(Long employerId);
+    // List<Job> findByEmployer_Id(Long employerId);
 }
