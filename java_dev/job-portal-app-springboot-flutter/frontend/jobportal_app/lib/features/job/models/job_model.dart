@@ -1,12 +1,12 @@
 class Job {
-  String id;
+  int? id;
   String title;
   String description;
   String location;
   String companyName;
   DateTime postedDate;
   DateTime applicationDeadline;
-  String employer;
+  //String employer;
 
   Job({
     required this.id,
@@ -16,19 +16,20 @@ class Job {
     required this.companyName,
     required this.postedDate,
     required this.applicationDeadline,
-    required this.employer,
+    // required this.employer,
   });
 
   factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        location: json["location"],
-        companyName: json["companyName"],
-        postedDate: DateTime.parse(json["postedDate"]),
-        applicationDeadline: DateTime.parse(json["applciationDeadline"]),
-        employer: json["employer"]);
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      location: json["location"],
+      companyName: json["companyName"],
+      postedDate: DateTime.parse(json["postedDate"]),
+      applicationDeadline: DateTime.parse(json["applicationDeadline"]),
+      //employer: json["employer"]
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -40,7 +41,7 @@ class Job {
       "companyName": companyName,
       "postedDate": postedDate.toIso8601String(),
       "applicationDeadline": applicationDeadline.toIso8601String(),
-      "employer": employer
+      //"employer": employer
     };
   }
 }

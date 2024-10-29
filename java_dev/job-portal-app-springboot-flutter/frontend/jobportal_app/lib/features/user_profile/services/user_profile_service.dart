@@ -5,8 +5,6 @@ import 'package:jobportal_app/core/utils/api_response.dart';
 import 'package:jobportal_app/features/user_profile/models/user_profile_model.dart';
 
 class UserProfileService {
-  final String userProfileBaseUrl = "$baseUrl/api/user-profiles";
-
   Future<List<UserProfile>> getAllUserProfiles() async {
     final response = await http.get(Uri.parse(userProfileBaseUrl));
 
@@ -34,11 +32,12 @@ class UserProfileService {
 
   Future<UserProfile> updateUserProfile(UserProfile profile) async {
     final response = await http.put(
-      Uri.parse(userProfileBaseUrl),
+      Uri.parse("$userProfileBaseUrl/${profile.id}/update"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(profile.toJson()),
     );
     if (response.statusCode == 200) {
+      print("Updating profile with id: ${profile.id}");
       return UserProfile.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Failed to update user profile");
@@ -47,11 +46,10 @@ class UserProfileService {
 
   Future<ApiResponse> deleteUserProfile(UserProfile profile) async {
     final response = await http.delete(
-      Uri.parse('$userProfileBaseUrl/${profile.id}'),
+      Uri.parse('$userProfileBaseUrl/${profile.id}/delete'),
       headers: {"Content-Type": "application/json"},
     );
-    //print('Deleting user profile at: $userProfileBaseUrl/${profile.id}');
-    print("MBAKS PRINT STATEMENT");
+    print('Deleting user profile at: $userProfileBaseUrl/${profile.id}/delete');
     if (response.statusCode == 204) {
       return ApiResponse(
         success: true,
